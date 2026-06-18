@@ -65,13 +65,18 @@ prisma/
 ├── seed.ts                 # Idempotent seed for reporters + editors
 └── migrations/
 
-public/
-└── index.html              # Single-page dashboard (vanilla JS)
-
+public/                     # Built static frontend assets served by Express
+frontend/                   # React frontend application workspace (Vite, TS, Zustand)
+├── src/
+│   ├── components/         # Lists, details, cards and modals for Jobs, Editors, Reporters
+│   ├── stores/             # Zustand state management stores (jobStore, reporterStore, editorStore)
+│   ├── services/           # API fetch wrappers (jobsService, reporterService, editorService)
+│   ├── App.tsx             # Main dashboard shell and tab layouts
+│   └── main.tsx
 docs/
 ├── API.md                  # Endpoint reference
 ├── ARCHITECTURE.md         # ← you are here
-├── DEPLOYMENT.md           # Postgres switch, production build
+└── DEPLOYMENT.md           # Postgres switch, production build
 ```
 
 ## Key design decisions
@@ -154,9 +159,8 @@ See [`prisma/schema.prisma`](../prisma/schema.prisma). The four entities:
 4. Service:
    a. prisma.job.findUnique           jobs.service.ts
    b. transitionJobStatus('NEW','ASSIGNED')   ← pure, throws on bad transition
-   c. prisma.reporter.findMany({where:{available:true}})
-   d. selectBestReporter(...)         ← pure
-   e. prisma.job.update
+   c. getSuggestedReporter(jobId)     ← resolves suggested reporter using database query
+   d. prisma.job.update
 5. ok(res, job)                       utils/response.ts → 200 + JSON
 6. (any thrown AppError is caught by errorHandler)
 ```
@@ -165,7 +169,7 @@ See [`prisma/schema.prisma`](../prisma/schema.prisma). The four entities:
 
 - **Domain layer** — Vitest unit tests, no I/O.
 - **Service & Database Integration layer** — Sequential test files (`jobs.test.ts`, `reporters.test.ts`, `editors.test.ts`) utilizing SQLite file `test.db`.
-- **Manual** — `public/index.html` exercises endpoints against a real running server.
+- **Manual** — React client (dashboard interface) exercises endpoints against the running Express server.
 
 Run:
 

@@ -105,10 +105,10 @@ router.post('/', validateRequest(createJobSchema), createJobController);
 
 /**
  * @openapi
- * /api/jobs/{id}/suggested-reporters:
+ * /api/jobs/{id}/suggested-reporter:
  *   get:
  *     tags: [Jobs]
- *     summary: Get a list of suggested (ranked) available reporters for the job
+ *     summary: Get the suggested available reporter for the job
  *     parameters:
  *       - in: path
  *         name: id
@@ -116,18 +116,16 @@ router.post('/', validateRequest(createJobSchema), createJobController);
  *         schema: { type: string, format: uuid }
  *     responses:
  *       200:
- *         description: Array of suggested reporters, sorted by suitability score and name
+ *         description: Suggested reporter, or null if none matches
  *         content:
  *           application/json:
- *             schema:
- *               type: array
- *               items: { $ref: '#/components/schemas/Reporter' }
+ *             schema: { $ref: '#/components/schemas/Reporter' }
  *       404:
  *         $ref: '#/components/responses/NotFound'
  *       500:
  *         $ref: '#/components/responses/ServerError'
  */
-router.get('/:id/suggested-reporters', getSuggestedReporterController);
+router.get('/:id/suggested-reporter', getSuggestedReporterController);
 
 /**
  * @openapi

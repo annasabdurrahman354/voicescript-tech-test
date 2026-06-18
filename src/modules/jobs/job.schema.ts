@@ -5,7 +5,7 @@ export const createJobSchema = z
     caseName: z.string().min(1, 'caseName is required'),
     durationMin: z.number().int().positive('durationMin must be a positive integer'),
     locationType: z.enum(['PHYSICAL', 'REMOTE']),
-    city: z.string().min(1).optional(),
+    city: z.string().min(1).nullable().optional(),
   })
   .refine((data) => data.locationType === 'REMOTE' || Boolean(data.city), {
     message: 'city is required for PHYSICAL jobs',

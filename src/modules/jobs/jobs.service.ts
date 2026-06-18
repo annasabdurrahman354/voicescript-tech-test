@@ -1,8 +1,7 @@
 import { prisma } from '../../lib/prisma';
 import { transitionJobStatus, type JobStatus } from '../../domain/jobStatus';
-import { rankReporters } from '../../domain/reporterRanking';
 import { NotFoundError, BadRequestError, NoAvailableReporterError } from '../../errors';
-import type { LocationType } from '@prisma/client';
+import type { LocationType, Reporter } from '@prisma/client';
 
 export const withRelations = {
   reporter: true,
@@ -77,7 +76,7 @@ export async function createJob(data: {
   });
 }
 
-export async function getSuggestedReporter(jobId: string) {
+export async function getSuggestedReporter(jobId: string): Promise<Reporter | null> {
   const job = await prisma.job.findUnique({
     where: { id: jobId },
   });
@@ -85,14 +84,27 @@ export async function getSuggestedReporter(jobId: string) {
     throw new NotFoundError(`Job with id "${jobId}" not found`);
   }
 
-  const reporters = await prisma.reporter.findMany({
-    where: { available: true },
-  });
-
-  return rankReporters(reporters, {
-    locationType: job.locationType,
-    jobCity: job.city ?? undefined,
-  });
+  if (job.locationType === 'PHYSICAL') {
+    if (!job.city) return null;
+    return prisma.reporter.findFirst({
+      where: {
+        city: job.city,
+        available: true,
+      },
+      orderBy: {
+        ratePerMinute: 'asc',
+      },
+    });
+  } else {
+    return prisma.reporter.findFirst({
+      where: {
+        available: true,
+      },
+      orderBy: {
+        ratePerMinute: 'asc',
+      },
+    });
+  }
 }
 
 export async function assignReporter(jobId: string, reporterId?: string) {
@@ -109,10 +121,10 @@ export async function assignReporter(jobId: string, reporterId?: string) {
   let targetReporterId = reporterId;
   if (!targetReporterId) {
     const suggested = await getSuggestedReporter(jobId);
-    if (suggested.length === 0) {
+    if (!suggested) {
       throw new NoAvailableReporterError();
     }
-    targetReporterId = suggested[0].id;
+    targetReporterId = suggested.id;
   }
 
   const reporter = await prisma.reporter.findUnique({

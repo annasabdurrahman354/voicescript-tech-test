@@ -9,6 +9,7 @@ import {
   assignEditor,
   finishJob,
 } from './jobs.service';
+import { createJobSchema } from './job.schema';
 
 describe('Job Service Integration Tests', () => {
   beforeEach(async () => {
@@ -76,6 +77,43 @@ describe('Job Service Integration Tests', () => {
     expect(remoteJob.caseName).toBe('Remote Test');
     expect(remoteJob.city).toBeNull();
   });
+
+  it('validates createJobSchema correctly', () => {
+    // 1. REMOTE with city null
+    const result1 = createJobSchema.safeParse({
+      caseName: 'Annas Nangis',
+      durationMin: 12,
+      locationType: 'REMOTE',
+      city: null,
+    });
+    expect(result1.success).toBe(true);
+
+    // 2. REMOTE with city undefined
+    const result2 = createJobSchema.safeParse({
+      caseName: 'Annas Nangis',
+      durationMin: 12,
+      locationType: 'REMOTE',
+    });
+    expect(result2.success).toBe(true);
+
+    // 3. PHYSICAL with city
+    const result3 = createJobSchema.safeParse({
+      caseName: 'Annas Nangis',
+      durationMin: 12,
+      locationType: 'PHYSICAL',
+      city: 'Jakarta',
+    });
+    expect(result3.success).toBe(true);
+
+    // 4. PHYSICAL with city null (should fail)
+    const result4 = createJobSchema.safeParse({
+      caseName: 'Annas Nangis',
+      durationMin: 12,
+      locationType: 'PHYSICAL',
+      city: null,
+    });
+    expect(result4.success).toBe(false);
+  });
 });
 
 describe('Jobs Workflow Integration Tests', () => {
@@ -119,9 +157,9 @@ describe('Jobs Workflow Integration Tests', () => {
   });
 
   it('ranks suggested reporters correctly', async () => {
-    const suggestions = await getSuggestedReporter(jobId);
-    expect(suggestions.length).toBe(1);
-    expect(suggestions[0].id).toBe(reporterId);
+    const suggested = await getSuggestedReporter(jobId);
+    expect(suggested).not.toBeNull();
+    expect(suggested?.id).toBe(reporterId);
   });
 
   it('performs full assignment and workflow transitions correctly', async () => {

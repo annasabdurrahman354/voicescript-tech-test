@@ -129,11 +129,11 @@ Fetch a single job with all relations.
 
 
 
-#### `GET /api/jobs/:id/suggested-reporters`
+#### `GET /api/jobs/:id/suggested-reporter`
 
-Retrieve a ranked list of available reporters (`available: true`) scored by suitability for the job location requirements.
+Get the single suggested available reporter (`available: true`) scored by suitability for the job location requirements.
 
-**Response `200`** — Array of reporters.
+**Response `200`** — A single reporter object, or `null` if no matching reporter is available.
 
 #### `POST /api/jobs/:id/assign-reporter`
 
