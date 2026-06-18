@@ -71,6 +71,76 @@ npm run dev
 
 ---
 
+## 🔄 Job Logic Process
+
+The application implements a strict state-machine workflow to manage court reporting jobs. All transitions and state-dependent records are handled transactionally in [jobs.service.ts](src/modules/jobs/jobs.service.ts) to guarantee database consistency:
+
+```mermaid
+graph TD
+    NEW[NEW] -->|assignReporter| ASSIGNED[ASSIGNED]
+    ASSIGNED -->|finishTranscription| TRANSCRIBED[TRANSCRIBED]
+    TRANSCRIBED -->|assignEditor| REVIEWED[REVIEWED]
+    REVIEWED -->|finishJob| COMPLETED[COMPLETED]
+```
+
+### 1. Job Creation (`NEW`)
+- Creates a job with case metadata (`caseName`, `durationMin`, `locationType`, `city`).
+- If `locationType` is `PHYSICAL`, the `city` field is required. If `REMOTE`, `city` is optional.
+- Initial job status is set to `NEW`.
+
+### 2. Reporter Assignment (`ASSIGNED`)
+- **Action**: `assignReporter(jobId, reporterId?)`
+- **Validation**: Enforces state transition from `NEW` to `ASSIGNED`.
+- **Selection**:
+  - If a specific `reporterId` is provided, checks if they are available.
+  - If omitted, auto-assigns the best suggested reporter using the ranking logic:
+    - **Physical Job**: Filters available reporters in the same city, sorted by lowest rate per minute first.
+    - **Remote Job**: Filters any available reporter, sorted by lowest rate per minute first.
+- **Side Effects**:
+  - Sets `job.status` to `ASSIGNED` and binds `job.reporterId`.
+  - Marks the assigned reporter as unavailable (`available = false`).
+  - Calculates and registers `reporterPayout = reporter.ratePerMinute * job.durationMin` in the `Payment` table.
+
+### 3. Transcription Completion (`TRANSCRIBED`)
+- **Action**: `finishTranscription(jobId)`
+- **Validation**: Enforces transition from `ASSIGNED` to `TRANSCRIBED`.
+- **Side Effects**:
+  - Releases the reporter, marking them as available again (`available = true`).
+  - Sets `job.status` to `TRANSCRIBED`.
+
+### 4. Editor Assignment (`REVIEWED`)
+- **Action**: `assignEditor(jobId, editorId)`
+- **Validation**: Enforces transition from `TRANSCRIBED` to `REVIEWED`.
+- **Selection**: Checks if the chosen editor exists and is available.
+- **Side Effects**:
+  - Sets `job.status` to `REVIEWED` and binds `job.editorId`.
+  - Marks the editor as unavailable (`available = false`).
+  - Calculates and registers `editorPayout = editor.flatFee` and updates `totalPayout = reporterPayout + editorPayout` in the `Payment` table.
+
+### 5. Job Completion (`COMPLETED`)
+- **Action**: `finishJob(jobId)`
+- **Validation**: Enforces transition from `REVIEWED` to `COMPLETED`.
+- **Side Effects**:
+  - Releases the editor, marking them as available again (`available = true`).
+  - Finalizes `job.status` to `COMPLETED` and locks in payment records.
+
+---
+
+## 📸 Screenshots
+
+### Interactive React Dashboard
+The frontend displays real-time statistics, active job dockets, state progress steppers, and detailed payout summaries:
+
+![Voicescript Dashboard](./docs/screenshots/dashboard.png)
+
+### Swagger API Documentation
+Interactive OpenAPI docs are exposed at `/api/docs` to test endpoints and explore payload schemas:
+
+![Swagger Documentation](./docs/screenshots/swagger_docs.png)
+
+---
+
+
 ## 🧪 Running Tests
 
 Integration and unit tests run against an isolated database configuration (`prisma/test.db`) to preserve your local development data:
