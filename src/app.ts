@@ -6,6 +6,7 @@ import { setupSwagger } from './config/swagger';
 import jobRoutes from './modules/jobs/jobs.routes';
 import reporterRoutes from './modules/reporters/reporters.routes';
 import editorRoutes from './modules/editors/editors.routes';
+import statisticsRoutes from './modules/statistics/statistics.routes';
 
 const app = express();
 
@@ -19,6 +20,7 @@ setupSwagger(app);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/reporters', reporterRoutes);
 app.use('/api/editors', editorRoutes);
+app.use('/api/statistics', statisticsRoutes);
 
 /**
  * @openapi

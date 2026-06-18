@@ -14,6 +14,7 @@ Complete reference for every HTTP endpoint exposed by the Court Reporting Workfl
   - [Jobs](#jobs)
   - [Reporters](#reporters)
   - [Editors](#editors)
+  - [Statistics](#statistics)
   - [Health](#health)
 - [Data model](#data-model)
 - [Job status state machine](#job-status-state-machine)
@@ -240,6 +241,49 @@ Creates a new editor (always starts with `available: true`).
 #### `GET /api/editors/:id`
 
 Retrieves a single editor.
+
+---
+
+### Statistics
+
+#### `GET /api/statistics`
+
+Retrieve aggregate metrics for jobs (status and location type distribution), reporters (availability count), editors (availability count), and completed job payment summaries.
+
+**Response `200`**
+```json
+{
+  "jobs": {
+    "total": 10,
+    "byStatus": {
+      "NEW": 2,
+      "ASSIGNED": 3,
+      "TRANSCRIBED": 1,
+      "REVIEWED": 2,
+      "COMPLETED": 2
+    },
+    "byLocation": {
+      "PHYSICAL": 6,
+      "REMOTE": 4
+    }
+  },
+  "reporters": {
+    "total": 5,
+    "available": 3,
+    "unavailable": 2
+  },
+  "editors": {
+    "total": 3,
+    "available": 1,
+    "unavailable": 2
+  },
+  "payouts": {
+    "reporter": 180000,
+    "editor": 50000,
+    "total": 230000
+  }
+}
+```
 
 ---
 

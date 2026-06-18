@@ -1,6 +1,14 @@
 import 'dotenv/config';
 import { defineConfig } from 'prisma/config';
 
+let dbUrl = process.env['DATABASE_URL'] || 'file:./prisma/dev.db';
+
+if (dbUrl === 'file:./prisma/dev.db') {
+  if (process.env['NODE_ENV'] === 'production') {
+    dbUrl = 'file:./prisma/prod.db';
+  }
+}
+
 export default defineConfig({
   schema: 'prisma/schema.prisma',
   migrations: {
@@ -9,7 +17,7 @@ export default defineConfig({
 
   // SQLite
   datasource: {
-    url: process.env['DATABASE_URL'] || 'file:./prisma/dev.db',
+    url: dbUrl,
   },
 
   // PostgreSQL — uncomment to switch providers

@@ -19,6 +19,9 @@ import { EditorList } from "./components/EditorList";
 import { EditorDetailPanel } from "./components/EditorDetailPanel";
 import { NewEditorModal } from "./components/NewEditorModal";
 
+import { StatisticsView } from "./components/StatisticsView";
+import { useStatisticsStore } from "./stores/statisticsStore";
+
 export default function CourtReportingDashboard() {
     const jobs = useJobStore((s) => s.jobs);
     const loading = useJobStore((s) => s.loading);
@@ -38,10 +41,11 @@ export default function CourtReportingDashboard() {
     const setSelectedEditorId = useEditorStore((s) => s.setSelectedEditorId);
     const loadEditors = useEditorStore((s) => s.loadEditors);
     const createEditor = useEditorStore((s) => s.createEditor);
+    const loadStatistics = useStatisticsStore((s) => s.loadStatistics);
 
     const { triggerToast } = useToast();
 
-    const [activeTab, setActiveTab] = useState<"jobs" | "reporters" | "editors">("jobs");
+    const [activeTab, setActiveTab] = useState<"jobs" | "reporters" | "editors" | "statistics">("jobs");
     const [showNewJob, setShowNewJob] = useState(false);
     const [showNewReporter, setShowNewReporter] = useState(false);
     const [showNewEditor, setShowNewEditor] = useState(false);
@@ -137,6 +141,8 @@ export default function CourtReportingDashboard() {
                             loadEditors().catch(() => {});
                         } else if (tab === "jobs") {
                             loadJobs().catch(() => {});
+                        } else if (tab === "statistics") {
+                            loadStatistics().catch(() => {});
                         }
                     }}
                 />
@@ -217,6 +223,13 @@ export default function CourtReportingDashboard() {
                                 body="Choose a transcript editor from the list to view their flat fee and availability status."
                             />
                         )
+                    )}
+
+                    {activeTab === "statistics" && (
+                        <StatisticsView
+                            sidebarOpen={sidebarOpen}
+                            setSidebarOpen={setSidebarOpen}
+                        />
                     )}
                 </section>
 

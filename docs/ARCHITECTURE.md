@@ -52,7 +52,8 @@ src/
 ├── modules/                # HTTP-facing feature modules
 │   ├── editors/            # editors.controller, editors.routes, editors.service, editors.schema
 │   ├── jobs/               # jobs.controller, jobs.routes, jobs.service, job.schema, jobs.test
-│   └── reporters/          # reporters.controller, reporters.routes, reporters.service, reporters.schema
+│   ├── reporters/          # reporters.controller, reporters.routes, reporters.service, reporters.schema
+│   └── statistics/         # statistics.controller, statistics.routes, statistics.service, statistics.test
 ├── errors.ts               # AppError, NotFoundError, BadRequestError, ...
 ├── utils/
 │   ├── parse.ts            # req.params/body coercion helpers
@@ -68,9 +69,9 @@ prisma/
 public/                     # Built static frontend assets served by Express
 frontend/                   # React frontend application workspace (Vite, TS, Zustand)
 ├── src/
-│   ├── components/         # Lists, details, cards and modals for Jobs, Editors, Reporters
-│   ├── stores/             # Zustand state management stores (jobStore, reporterStore, editorStore)
-│   ├── services/           # API fetch wrappers (jobsService, reporterService, editorService)
+│   ├── components/         # Lists, details, cards, modals, and StatisticsView for dashboard layout
+│   ├── stores/             # Zustand state management stores (jobStore, reporterStore, editorStore, statisticsStore)
+│   ├── services/           # API fetch wrappers (jobsService, reporterService, editorService, statisticsService)
 │   ├── App.tsx             # Main dashboard shell and tab layouts
 │   └── main.tsx
 docs/

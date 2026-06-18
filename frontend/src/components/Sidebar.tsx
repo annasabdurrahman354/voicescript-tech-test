@@ -1,11 +1,10 @@
-import { Briefcase, Scale, UserCheck, Users } from "lucide-react";
-import { formatIDR } from "../lib/format";
+import { BarChart3, Briefcase, Scale, UserCheck, Users } from "lucide-react";
 
 interface SidebarProps {
     open: boolean;
     onClose: () => void;
-    activeTab: "jobs" | "reporters" | "editors";
-    onChangeTab: (tab: "jobs" | "reporters" | "editors") => void;
+    activeTab: "jobs" | "reporters" | "editors" | "statistics";
+    onChangeTab: (tab: "jobs" | "reporters" | "editors" | "statistics") => void;
 }
 
 export function Sidebar({
@@ -46,6 +45,7 @@ export function Sidebar({
                         { id: "jobs", label: "Jobs", icon: Briefcase },
                         { id: "reporters", label: "Reporters", icon: Users },
                         { id: "editors", label: "Editors", icon: UserCheck },
+                        { id: "statistics", label: "Statistics", icon: BarChart3 },
                     ].map((item) => {
                         const Icon = item.icon;
                         const isActive = activeTab === item.id;
@@ -69,13 +69,6 @@ export function Sidebar({
                         );
                     })}
                 </nav>
-
-                <div className="border-t border-slate-200 px-6 py-5 bg-slate-100">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Total payout</p>
-                    <p className="font-mono text-lg mt-1 font-semibold text-slate-900">
-                        {formatIDR(1000000)}
-                    </p>
-                </div>
             </aside>
         </>
     );

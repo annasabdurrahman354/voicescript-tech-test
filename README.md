@@ -105,6 +105,8 @@ The compiled files are emitted to `dist/`, and static assets are bundled into `p
 
 | Document | Purpose & Summary |
 | --- | --- |
-| **[docs/API.md](./docs/API.md)** | Full REST endpoint reference. Documents all routes (such as `/api/jobs`, `/api/reporters`, `/api/editors`), JSON schemas, status transition rules, payment calculation formulas, and error response structures. It specifically covers the singular `/api/jobs/:id/suggested-reporter` endpoint returning a single reporter object or `null`. |
+| **[docs/API.md](./docs/API.md)** | Full REST endpoint reference. Documents all routes (such as `/api/jobs`, `/api/reporters`, `/api/editors`, `/api/statistics`), JSON schemas, status transition rules, payment calculation formulas, and error response structures. It specifically covers the singular `/api/jobs/:id/suggested-reporter` endpoint returning a single reporter object or `null`. |
 | **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** | Detailed architecture overview. Describes the layered clean-architecture (Controller, Service, Domain models), pure business rule validations, status transitions, scoring logic for assignments, monorepo directory mapping, and test database isolation. |
 | **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)** | Production configuration guide. Discusses environment variables (`NODE_ENV`, `PORT`, `DATABASE_URL`), instructions on migrating from SQLite to PostgreSQL, Nginx reverse proxy server blocks, Dockerfile setups, and health-checking. |
+| **[frontend/README.md](./frontend/README.md)** | Frontend-specific documentation. Details the React 19 + Vite 8 + Tailwind CSS 4 setup, Zustand client state stores, API services, component hierarchy map, and development guidelines. |
+
