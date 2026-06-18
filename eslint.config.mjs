@@ -1,7 +1,7 @@
 // @ts-check
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
-import prettierConfig from "eslint-config-prettier";
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import prettierConfig from 'eslint-config-prettier';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -10,10 +10,10 @@ export default tseslint.config(
   {
     rules: {
       // Enforce clean code habits
-      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
-    ignores: ["dist/**", "node_modules/**", "generated/**"],
-  }
+    ignores: ['dist/**', 'node_modules/**', 'generated/**'],
+  },
 );

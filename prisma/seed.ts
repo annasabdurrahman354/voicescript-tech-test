@@ -1,16 +1,12 @@
-// prisma/seed.ts
-// Seeds the database with sample reporters and editors for testing/demo purposes.
-
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 
-// Prisma v7: requires a driver adapter
 const adapter = new PrismaBetterSqlite3({ url: 'file:./prisma/dev.db' });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('🌱 Seeding database...');
+  console.log('Seeding database...');
 
   // Clear existing seed data so this script is idempotent
   await prisma.payment.deleteMany();
@@ -18,7 +14,7 @@ async function main() {
   await prisma.reporter.deleteMany();
   await prisma.editor.deleteMany();
 
-  // ── Reporters ──────────────────────────────────────────────────────────────
+  // Reporters
   const reporters = await prisma.reporter.createMany({
     data: [
       { name: 'Alice Hartman', city: 'Jakarta', available: true, ratePerMinute: 2000 },
@@ -29,7 +25,7 @@ async function main() {
     ],
   });
 
-  // ── Editors ────────────────────────────────────────────────────────────────
+  // Editors
   const editors = await prisma.editor.createMany({
     data: [
       { name: 'Frank Wijaya', available: true, flatFee: 50000 },
@@ -38,13 +34,13 @@ async function main() {
     ],
   });
 
-  console.log(`✅ Created ${reporters.count} reporters and ${editors.count} editors.`);
-  console.log('🎉 Seed complete!');
+  console.log(`Created ${reporters.count} reporters and ${editors.count} editors.`);
+  console.log('Seed complete!');
 }
 
 main()
   .catch((err) => {
-    console.error('❌ Seed failed:', err);
+    console.error('Seed failed:', err);
     process.exit(1);
   })
   .finally(async () => {

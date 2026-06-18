@@ -34,10 +34,10 @@ They need to:
 
 ```yaml
 Create a job:
-- case_name
-- duration (minutes)
-- location (physical / remote)
-- status
+  - case_name
+  - duration (minutes)
+  - location (physical / remote)
+  - status
 ```
 
 Statuses:
@@ -50,24 +50,24 @@ NEW → ASSIGNED → TRANSCRIBED → REVIEWED → COMPLETED
 
 ### 2. Reporter Assignment
 
-* Assign job to a reporter
-* Reporter attributes:
+- Assign job to a reporter
+- Reporter attributes:
 
-  * name
-  * location
-  * availability
+  - name
+  - location
+  - availability
 
 Logic:
 
-* Prefer same city for physical jobs
-* Allow remote assignment
+- Prefer same city for physical jobs
+- Allow remote assignment
 
 ---
 
 ### 3. Editor Assignment
 
-* Assign editor after transcription
-* Track review status
+- Assign editor after transcription
+- Track review status
 
 ---
 
@@ -75,38 +75,38 @@ Logic:
 
 ```yaml
 Example rules:
-- Reporter paid per minute (e.g. 2000 IDR/min)
-- Editor paid per job (flat fee)
+  - Reporter paid per minute (e.g. 2000 IDR/min)
+  - Editor paid per job (flat fee)
 
 System should:
-- calculate total payout
-- display per-job earnings
+  - calculate total payout
+  - display per-job earnings
 ```
 
 ---
 
 ## Frontend Requirements
 
-* Simple dashboard:
+- Simple dashboard:
 
-  * job list
-  * status
-  * assignments
+  - job list
+  - status
+  - assignments
 
-* Basic UI is fine (function > design)
+- Basic UI is fine (function > design)
 
 ---
 
 ## Backend Requirements
 
-* REST API:
+- REST API:
 
-  * create job
-  * assign reporter/editor
-  * update status
-  * calculate payment
+  - create job
+  - assign reporter/editor
+  - update status
+  - calculate payment
 
-* Use:
+- Use:
 
-  * Node.js + TypeScript
-  * any DB (Postgres preferred, SQLite OK)
+  - Node.js + TypeScript
+  - any DB (Postgres preferred, SQLite OK)

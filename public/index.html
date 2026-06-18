@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -570,7 +570,14 @@
           </div>
           <div class="form-group">
             <label for="durationMin">Duration (minutes)</label>
-            <input id="durationMin" name="durationMin" type="number" min="1" placeholder="60" required />
+            <input
+              id="durationMin"
+              name="durationMin"
+              type="number"
+              min="1"
+              placeholder="60"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="locationType">Location Type</label>
@@ -693,14 +700,16 @@
             const reporterCol = job.reporter
               ? `<span>${job.reporter.name}</span><br><small style="color:var(--text-faint)">${job.reporter.city}</small>`
               : job.status === 'NEW'
-              ? `<button class="btn-ghost btn-sm" onclick="assignReporter('${job.id}')">Auto-assign</button>`
-              : '—';
+                ? `<button class="btn-ghost btn-sm" onclick="assignReporter('${job.id}')">Auto-assign</button>`
+                : '—';
 
             const editorCol = job.editor
               ? `<span>${job.editor.name}</span>`
-              : job.status === 'TRANSCRIBED' || job.status === 'REVIEWED' || job.status === 'COMPLETED'
-              ? `<button class="btn-ghost btn-sm" onclick="openAssignEditor('${job.id}')">Assign Editor</button>`
-              : '—';
+              : job.status === 'TRANSCRIBED' ||
+                  job.status === 'REVIEWED' ||
+                  job.status === 'COMPLETED'
+                ? `<button class="btn-ghost btn-sm" onclick="openAssignEditor('${job.id}')">Assign Editor</button>`
+                : '—';
 
             const paymentBtn =
               job.reporter && job.status !== 'NEW'
@@ -815,7 +824,10 @@
           const available = editors.filter((e) => e.available);
           const select = document.getElementById('editor-select');
           select.innerHTML = available
-            .map((e) => `<option value="${e.id}">${e.name} — Rp ${e.flatFee.toLocaleString()}/job</option>`)
+            .map(
+              (e) =>
+                `<option value="${e.id}">${e.name} — Rp ${e.flatFee.toLocaleString()}/job</option>`,
+            )
             .join('');
           if (available.length === 0) {
             select.innerHTML = '<option disabled>No available editors</option>';
@@ -842,17 +854,17 @@
         }
       });
 
-      document.getElementById('cancel-editor-btn').addEventListener('click', () =>
-        closeModal('assign-editor-modal'),
-      );
+      document
+        .getElementById('cancel-editor-btn')
+        .addEventListener('click', () => closeModal('assign-editor-modal'));
 
       // ── Create job modal ───────────────────────────────────────────────────────
-      document.getElementById('new-job-btn').addEventListener('click', () =>
-        openModal('create-modal'),
-      );
-      document.getElementById('cancel-create-btn').addEventListener('click', () =>
-        closeModal('create-modal'),
-      );
+      document
+        .getElementById('new-job-btn')
+        .addEventListener('click', () => openModal('create-modal'));
+      document
+        .getElementById('cancel-create-btn')
+        .addEventListener('click', () => closeModal('create-modal'));
 
       // Show/hide city field based on location type
       document.getElementById('locationType').addEventListener('change', (e) => {

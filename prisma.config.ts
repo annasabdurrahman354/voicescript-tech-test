@@ -1,4 +1,3 @@
-// prisma.config.ts
 // Prisma v7 configuration file.
 // In Prisma v7, ALL connection URLs must be defined here — not in schema.prisma.
 

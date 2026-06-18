@@ -21,15 +21,15 @@ npm run dev
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Runtime | Node.js + TypeScript |
-| Framework | Express v5 |
-| ORM | Prisma v7 |
-| Database | PostgreSQL (Prisma Postgres) |
-| Validation | Zod |
-| Testing | Vitest |
-| Linting | ESLint + Prettier |
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Runtime    | Node.js + TypeScript         |
+| Framework  | Express v5                   |
+| ORM        | Prisma v7                    |
+| Database   | PostgreSQL (Prisma Postgres) |
+| Validation | Zod                          |
+| Testing    | Vitest                       |
+| Linting    | ESLint + Prettier            |
 
 ## Architecture
 
@@ -53,18 +53,18 @@ src/
 
 ## API Endpoints
 
-| Method | Route | Description |
-|---|---|---|
-| `GET` | `/api/jobs` | List all jobs |
-| `POST` | `/api/jobs` | Create a job |
-| `GET` | `/api/jobs/:id` | Get job detail |
-| `PATCH` | `/api/jobs/:id/status` | Advance job status (state machine validated) |
-| `POST` | `/api/jobs/:id/assign-reporter` | Auto-assign best available reporter |
-| `POST` | `/api/jobs/:id/assign-editor` | Assign a specific editor |
-| `GET` | `/api/jobs/:id/payment` | Calculate and return job payment |
-| `GET` | `/api/reporters` | List all reporters |
-| `GET` | `/api/editors` | List all editors |
-| `GET` | `/api/health` | Health check |
+| Method  | Route                           | Description                                  |
+| ------- | ------------------------------- | -------------------------------------------- |
+| `GET`   | `/api/jobs`                     | List all jobs                                |
+| `POST`  | `/api/jobs`                     | Create a job                                 |
+| `GET`   | `/api/jobs/:id`                 | Get job detail                               |
+| `PATCH` | `/api/jobs/:id/status`          | Advance job status (state machine validated) |
+| `POST`  | `/api/jobs/:id/assign-reporter` | Auto-assign best available reporter          |
+| `POST`  | `/api/jobs/:id/assign-editor`   | Assign a specific editor                     |
+| `GET`   | `/api/jobs/:id/payment`         | Calculate and return job payment             |
+| `GET`   | `/api/reporters`                | List all reporters                           |
+| `GET`   | `/api/editors`                  | List all editors                             |
+| `GET`   | `/api/health`                   | Health check                                 |
 
 ## Job Workflow
 
@@ -99,8 +99,9 @@ npm run test:coverage
 ```
 
 All 31 tests cover the three core domain functions:
+
 - `transitionJobStatus` — 12 tests
-- `calculatePayment` — 8 tests  
+- `calculatePayment` — 8 tests
 - `rankReporters` / `selectBestReporter` — 11 tests
 
 ## Scripts

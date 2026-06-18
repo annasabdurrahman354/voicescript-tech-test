@@ -7,8 +7,7 @@ export default defineConfig({
     include: ['src/**/*.test.ts'],
     coverage: {
       provider: 'v8',
-      // Focus coverage reporting on the pure domain layer
-      include: ['src/domain/**'],
+      include: ['src/utils/statusMachine.ts', 'src/modules/**/*.service.ts'],
       reporter: ['text', 'json', 'html'],
     },
   },

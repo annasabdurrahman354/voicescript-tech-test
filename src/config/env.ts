@@ -1,10 +1,7 @@
-// src/config/env.ts
-// Validates all required environment variables at startup using Zod.
-// The app will fail fast with a clear error if any variable is missing.
-
 import 'dotenv/config';
 import { z } from 'zod';
 
+// Validates all required environment variables at startup using Zod.
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(3000),
@@ -19,5 +16,4 @@ if (!parsed.success) {
   process.exit(1);
 }
 
-// Export the validated, typed env object
 export const env = parsed.data;
