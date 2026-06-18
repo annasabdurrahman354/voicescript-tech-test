@@ -8,6 +8,7 @@ import {
     MapPin,
     BarChart3,
     Coins,
+    Menu,
 } from "lucide-react";
 import { useStatisticsStore } from "../stores/statisticsStore";
 import { STATUS_LABEL } from "../constants";
@@ -70,12 +71,10 @@ export function StatisticsView({ sidebarOpen, setSidebarOpen }: StatisticsViewPr
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
-                        className="rounded-sm p-1.5 text-slate-600 hover:bg-slate-100 transition-colors lg:hidden focus:outline-none"
+                        className="rounded-sm p-1.5 text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[#2f5a80]/20"
                         aria-label="Toggle sidebar"
                     >
-                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        <Menu className="h-5 w-5" />
                     </button>
                     <div>
                         <h1 className="font-serif text-2xl font-semibold leading-tight text-slate-900 flex items-center gap-2">
