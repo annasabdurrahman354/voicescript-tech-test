@@ -4,3 +4,6 @@ generated/
 coverage/
 .env.local
 *.js.map
+frontend/
+*.db
+*.db-journal

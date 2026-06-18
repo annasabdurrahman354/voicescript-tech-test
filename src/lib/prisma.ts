@@ -8,7 +8,14 @@ declare global {
 }
 
 function createPrismaClient() {
-  const dbUrl = env.DATABASE_URL ?? 'file:./prisma/dev.db';
+  let dbUrl = env.DATABASE_URL ?? 'file:./prisma/dev.db';
+
+  if (dbUrl === 'file:./prisma/dev.db') {
+    if (env.NODE_ENV === 'production') {
+      dbUrl = 'file:./prisma/prod.db';
+    }
+  }
+
   const dbPath = dbUrl.startsWith('file:') ? dbUrl.slice(5) : dbUrl;
   const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
 

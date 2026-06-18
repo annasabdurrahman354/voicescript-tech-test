@@ -1,6 +1,3 @@
-// Prisma v7 configuration file.
-// In Prisma v7, ALL connection URLs must be defined here — not in schema.prisma.
-
 import 'dotenv/config';
 import { defineConfig } from 'prisma/config';
 
@@ -10,13 +7,12 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
 
-  // ── Database connection ────────────────────────────────────────────────────
-  // SQLite (default — no server needed, great for local dev/testing)
+  // SQLite
   datasource: {
-    url: 'file:./prisma/dev.db',
+    url: process.env['DATABASE_URL'] || 'file:./prisma/dev.db',
   },
 
-  // ── PostgreSQL — uncomment to switch providers ─────────────────────────────
+  // PostgreSQL — uncomment to switch providers
   // Update prisma/schema.prisma datasource.provider to "postgresql" too.
   // datasource: {
   //   url: process.env['DATABASE_URL'],

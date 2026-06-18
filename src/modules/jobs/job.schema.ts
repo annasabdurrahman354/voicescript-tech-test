@@ -12,8 +12,8 @@ export const createJobSchema = z
     path: ['city'],
   });
 
-export const updateStatusSchema = z.object({
-  status: z.enum(['NEW', 'ASSIGNED', 'TRANSCRIBED', 'REVIEWED', 'COMPLETED']),
+export const assignReporterSchema = z.object({
+  reporterId: z.string().uuid('reporterId must be a valid UUID').optional(),
 });
 
 export const assignEditorSchema = z.object({
@@ -21,5 +21,5 @@ export const assignEditorSchema = z.object({
 });
 
 export type CreateJobInput = z.infer<typeof createJobSchema>;
-export type UpdateStatusInput = z.infer<typeof updateStatusSchema>;
+export type AssignReporterInput = z.infer<typeof assignReporterSchema>;
 export type AssignEditorInput = z.infer<typeof assignEditorSchema>;
