@@ -189,7 +189,7 @@ export default function CourtReportingDashboard() {
                         ) : (
                             <EmptyState
                                 icon={FileText}
-                                title="Select a docket entry"
+                                title="Select a doaaacket entry"
                                 body="Choose a case from the list to view its progression, assignments, and payment details."
                             />
                         )

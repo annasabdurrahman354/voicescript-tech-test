@@ -55,19 +55,24 @@ Seed the local database with initialavailable court reporters and editors:
 npm run prisma:seed
 ```
 ### 5. Build Application for Production
+To compile the TypeScript backend and bundle the React frontend assets:
 ```bash
 npm run build
 ```
 
-### 6. Start Production Server
-Run the Express backend (restarts automatically on file changes) and the frontend builder:
+### 6. Start Development Server
+Start the concurrent development runner to boot both the backend Express watcher and the frontend Vite HMR server in parallel:
 ```bash
 npm run dev
 ```
 
-*   **Interactive Dashboard:** Open [http://localhost:3000](http://localhost:3000)
-*   **Swagger API Docs:** Open [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
-*   **Service Health Check:** Open [http://localhost:3000/api/health](http://localhost:3000/api/health)
+*   💻 **Frontend Dashboard (with HMR):** Open [http://localhost:5173](http://localhost:5173) (Use this during development for instant hot-reloading!)
+*   🔌 **Express Backend API Server:** Runs on [http://localhost:3000](http://localhost:3000) (React client requests to `/api` are automatically proxied here)
+*   📚 **Swagger API Docs:** Open [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+*   🔍 **Service Health Check:** Open [http://localhost:3000/api/health](http://localhost:3000/api/health)
+
+> [!NOTE]
+> The backend server on `http://localhost:3000` serves the *built* static frontend assets from the `/public` folder. If you visit `http://localhost:3000` directly, any edits to your React source code will not reflect until you run `npm run build` again. For real-time feedback with instant hot-reloading (HMR), always develop using `http://localhost:5173`.
 
 ---
 
